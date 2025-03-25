@@ -1,0 +1,64 @@
+# Ejemplo deployment kubernetes
+
+# Indicamos el apiVersion
+apiVersion: apps/v1
+# Indicamos que el kind es un Deployment
+kind: Deployment
+# Metadata del deployment
+metadata:
+  # Nombre del deployment
+  name: deployment-example
+  # Labels del deployment
+  labels:
+    app: deployment-example
+# Especificamos las especificaciones del deployment
+spec:
+  # Indicamos el número de replicas
+  replicas: 3
+  # Indicamos el selector del deployment
+  selector:
+    matchLabels:
+      app: deployment-example
+  # Especificamos el template
+  template:
+    metadata:
+      labels:
+        app: deployment-example
+    spec:
+      # Indicamos los contenedores
+      containers:
+      - name: nginx
+        image: nginx:1.27.4
+        ports:
+        - containerPort: 80
+
+--- 
+
+# Service para exponer el deployment
+
+# Indicamos el apiVersion
+apiVersion: v1
+# Indicamos que el kind es un Service
+kind: Service
+# Metadata del service
+metadata:
+  # Nombre del service
+  name: ejemplo-deployment
+  # Labels del service
+  labels:
+    app: deployment-example 
+# Especificamos las especificaciones del service
+spec:
+  # Indicamos el selector del service
+  selector:
+    app: deployment-example
+  # Indicamos los puertos del service
+  ports:
+    # Protocolo TCP
+  - protocol: TCP
+    # Puerto del service dentro del cluster
+    port: 80
+    # Puerto del contenedor indicado en el deployment
+    targetPort: 80
+  # Indicamos el tipo de service
+  type: LoadBalancer
