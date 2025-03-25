@@ -5,7 +5,7 @@ Para ejecutar el deployment debemos seguir los siguientes pasos:
 1. Aplica el archivo de deployment con el siguiente comando:
 
    ```bash
-   kubectl apply -f deployment.yaml
+   kubectl apply -f deployment-example.yaml
    ```
 
 1. Verifica que el deployment se haya creado correctamente:
